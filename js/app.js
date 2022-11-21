@@ -40,6 +40,9 @@ let odd19 = new Odd('wine-glass', './images/wine-glass.jpeg');
 
 let odds = [odd1, odd2, odd3, odd4, odd5, odd6, odd7, odd8, odd9, odd10, odd11, odd12, odd13, odd14, odd15, odd16, odd17, odd18, odd19];
 
+let firstOdd;
+let secondOdd;
+let thirdOdd;
 
 function getRandomIndex() {
   return Math.floor(Math.random() * odds.length);
@@ -50,47 +53,49 @@ function renderOdds() {
   index1 = getRandomIndex();
   index2 = getRandomIndex();
   index3 = getRandomIndex();
+
+  firstOdd = odds[index1];
+  secondOdd = odds[index2];
+  thirdOdd = odds[index3];
+
+  image1.src = firstOdd.src;
+  image1.alt = firstOdd.name;
+  image1.title = firstOdd.name;
+  image1.id = index1;
+  image2.src = secondOdd.src;
+  image2.alt = secondOdd.name;
+  image2.title = secondOdd.name;
+  image2.id = index2;
+  image3.src = thirdOdd.src;
+  image3.alt = thirdOdd.name;
+  image3.title = thirdOdd.name;
+  image3.id = index3;
+
+  firstOdd.views++;
+  secondOdd.views++;
+  thirdOdd.views++;
 }
 
 // we only move on, once firstOdd, secondOdd, thirdOdd are DIFFERENT
 
 // How do i include the third picture to not be the same as the two before it? How do i get my first image to change?
 
-while (index1 === index2 ) {
-//   index1 = getRandomIndex();
+while (index1 === index2) {
+  //   index1 = getRandomIndex();
   index2 = getRandomIndex();
   index3 = getRandomIndex();
 }
 
 
-let firstOdd = odds[index1];
-let secondOdd = odds[index2];
-let thirdOdd = odds[index3];
+renderOdds();
 
-
-image1.src = firstOdd.src;
-image1.alt = firstOdd.name;
-image1.title = firstOdd.name;
-image1.id = index1;
-image2.src = secondOdd.src;
-image2.alt = secondOdd.name;
-image2.title = secondOdd.name;
-image2.id = index2;
-image3.src = thirdOdd.src;
-image3.alt = thirdOdd.name;
-image3.title = thirdOdd.name;
-image3.id = index3;
-
-firstOdd.views++;
-secondOdd.views++;
-thirdOdd.views++;
 
 function handleOddClick(event) {
   clicks++;
   console.log(event.target);
 
 
-  // increment the correct goat's .clicks?
+  // increment the correct odd's .clicks?
   odds[event.target.id].clicks++;
 
   if (clicks > 24) {
@@ -121,4 +126,3 @@ image1.addEventListener('click', handleOddClick);
 image2.addEventListener('click', handleOddClick);
 image3.addEventListener('click', handleOddClick);
 resultsButton.addEventListener('click', viewResults);
-renderOdds();
