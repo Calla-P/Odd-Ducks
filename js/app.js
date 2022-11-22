@@ -4,6 +4,7 @@ let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:last-child');
 
 let resultsButton = document.getElementById('results');
+
 let index1 = 0;
 let index2 = 0;
 let index3 = 0;
@@ -40,23 +41,34 @@ let odd19 = new Odd('wine-glass', './images/wine-glass.jpeg');
 
 let odds = [odd1, odd2, odd3, odd4, odd5, odd6, odd7, odd8, odd9, odd10, odd11, odd12, odd13, odd14, odd15, odd16, odd17, odd18, odd19];
 
+let uniqueOdds = [];
+
 let firstOdd;
 let secondOdd;
 let thirdOdd;
+
+// getting products at random
 
 function getRandomIndex() {
   return Math.floor(Math.random() * odds.length);
 }
 
 
-function renderOdds() {
-  index1 = getRandomIndex();
-  index2 = getRandomIndex();
-  index3 = getRandomIndex();
+// assigning my images
 
-  firstOdd = odds[index1];
-  secondOdd = odds[index2];
-  thirdOdd = odds[index3];
+function renderOdds() {
+
+  while (uniqueOdds.length < 3) {
+    let randomIndex = getRandomIndex();
+    if (!uniqueOdds.includes(odds[randomIndex])) {
+      uniqueOdds.push(odds[randomIndex]);
+    }
+  }
+  console.log(uniqueOdds);
+
+  firstOdd = uniqueOdds[0];
+  secondOdd = uniqueOdds[1];
+  thirdOdd = uniqueOdds[2];
 
   image1.src = firstOdd.src;
   image1.alt = firstOdd.name;
@@ -74,14 +86,16 @@ function renderOdds() {
   firstOdd.views++;
   secondOdd.views++;
   thirdOdd.views++;
+
+  uniqueOdds.shift();
+  uniqueOdds.shift();
+  uniqueOdds.shift();
+
+
 }
 
-// we only move on, once firstOdd, secondOdd, thirdOdd are DIFFERENT
-
-// How do i include the third picture to not be the same as the two before it? How do i get my first image to change?
-
 while (index1 === index2) {
-  //   index1 = getRandomIndex();
+  index1 = getRandomIndex();
   index2 = getRandomIndex();
   index3 = getRandomIndex();
 }
@@ -108,10 +122,10 @@ function handleOddClick(event) {
   renderOdds();
 }
 
-// eslint-disable-next-line no-unused-vars
-function viewResults(_event) {
+
+function viewResults(event) {
   let ul = document.querySelector('ul');
-  // make one li for each goat inside goats
+
   for (let i = 0; i < odds.length; i++) {
     let li = document.createElement('li');
     li.innerText = `${odds[i].name} was viewed ${odds[i].views} times, and was clicked ${odds[i].clicks} times.`;
