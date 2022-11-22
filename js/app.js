@@ -140,3 +140,5 @@ image1.addEventListener('click', handleOddClick);
 image2.addEventListener('click', handleOddClick);
 image3.addEventListener('click', handleOddClick);
 resultsButton.addEventListener('click', viewResults);
+
+// something about my merge didnt got well
