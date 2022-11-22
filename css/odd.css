@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #E4D7D0;
+    color: #0A4158;
+    width: 80%;
+    height:90%;
+  }
+  h1 {
+    font-size: 5rem;
+    color: rosybrown;
+    line-height: .8;
+    margin: 3rem 0 1rem;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    text-align:center;
+    font-weight: bolder;
+    text-align: end;
+  }
+
+  main {
+    width: 1024px;
+    margin: 1rem auto;
+    display: grid;
+    /* grid-template-columns: 250px 4fr; */
+    grid-template-rows: 6.5rem 10rem 20rem 40%;
+  }
+  
+  
+
+  section {
+    /* This element will be a grid item, but also a flex container */
+    background-color: #4B8378;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 6;
+    grid-column-end: 10;
+    padding: 4rem;
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+  }
+
+  section img {
+    width: 350px;
+    max-height: 20rem;
+    border: 4px solid transparent;
+  }
+
+  section img:hover {
+    border: 5px solid #FF9636;
+    cursor: pointer;
+  }
+
+  section.no-voting img:hover {
+    border: 4px solid transparent;
+    cursor: none;
+  }
+
+  ul {
+    margin: 1rem;
+  }
+  li {
+    margin: .7rem;
+    font-weight: bold;
+  }
+
+  button {
+    width: 8rem;
+    height: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    color: #FF9636;
+    background-color: #0A4158;
+    border-radius: 4rem;
+    cursor: pointer;
+
+  }
