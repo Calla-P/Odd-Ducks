@@ -5,9 +5,7 @@ let image3 = document.querySelector('section img:last-child');
 
 let resultsButton = document.getElementById('results');
 
-let index1 = 0;
-let index2 = 0;
-let index3 = 0;
+
 let clicks = 0;
 
 
@@ -58,7 +56,7 @@ function getRandomIndex() {
 
 function renderOdds() {
 
-  while (uniqueOdds.length < 3) {
+  while (uniqueOdds.length < 6) {
     let randomIndex = getRandomIndex();
     if (!uniqueOdds.includes(odds[randomIndex])) {
       uniqueOdds.push(odds[randomIndex]);
@@ -73,15 +71,12 @@ function renderOdds() {
   image1.src = firstOdd.src;
   image1.alt = firstOdd.name;
   image1.title = firstOdd.name;
-  image1.id = index1;
   image2.src = secondOdd.src;
   image2.alt = secondOdd.name;
   image2.title = secondOdd.name;
-  image2.id = index2;
   image3.src = thirdOdd.src;
   image3.alt = thirdOdd.name;
   image3.title = thirdOdd.name;
-  image3.id = index3;
 
   firstOdd.views++;
   secondOdd.views++;
@@ -91,13 +86,6 @@ function renderOdds() {
   uniqueOdds.shift();
   uniqueOdds.shift();
 
-
-}
-
-while (index1 === index2) {
-  index1 = getRandomIndex();
-  index2 = getRandomIndex();
-  index3 = getRandomIndex();
 }
 
 
@@ -110,7 +98,12 @@ function handleOddClick(event) {
 
 
   // increment the correct odd's .clicks?
-  odds[event.target.id].clicks++;
+
+  for (let i = 0; i < odds.length; i++) {
+    if (odds[i].name === event.target.alt) {
+      odds[i].clicks++;
+    }
+  }
 
   if (clicks > 24) {
     // remove the event listeners
@@ -132,6 +125,62 @@ function viewResults(event) {
     ul.appendChild(li);
   }
 
+  // get my names into an array with a for loop:
+  let oddNames = [];
+  for (let i = 0; i < odds.length; i++) {
+    oddNames.push(odds[i].name);
+  }
+  console.log('the oddNames are:', oddNames);
+
+  // get my click data into an array with a for loop:
+  let oddClicks = [];
+  for (let i = 0; i < odds.length; i++) {
+    oddClicks.push(odds[i].clicks);
+  }
+  console.log('the oddClicks are:', oddClicks);
+
+  // get my view data into an array with a for loop:
+
+  let oddViews = [];
+  for (let i = 0; i < odds.length; i++) {
+    oddViews.push(odds[i].views);
+  }
+  console.log('the oddViews are:', oddViews);
+
+
+
+  const ctx = document.getElementById('myChart');
+
+  // the starter code for this Chart comes from chartjs.org's "Getting Started"
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: oddNames, // x-axis
+      datasets: [{
+        label: '# of Clicks Per Odd Image', // title
+        data: oddClicks, // y-axis data
+        borderColor: [],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        borderWidth: 1
+      }, {
+        label: '# of Views Per Odd Image',
+        data: oddViews,
+        borderColor:[], // Utils.CHART_COLORS.blue,
+        borderWidth: 1 //Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+
+
   resultsButton.removeEventListener('click', viewResults);
 }
 // page loaders
@@ -140,5 +189,3 @@ image1.addEventListener('click', handleOddClick);
 image2.addEventListener('click', handleOddClick);
 image3.addEventListener('click', handleOddClick);
 resultsButton.addEventListener('click', viewResults);
-
-// something about my merge didnt got well
