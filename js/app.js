@@ -39,6 +39,27 @@ let odd19 = new Odd('wine-glass', './images/wine-glass.jpeg');
 
 let odds = [odd1, odd2, odd3, odd4, odd5, odd6, odd7, odd8, odd9, odd10, odd11, odd12, odd13, odd14, odd15, odd16, odd17, odd18, odd19];
 
+// Question: Where in the code do I want to load my odds array?
+// Load from LS
+if (localStorage.getItem('savedOdds')) {
+  // Step 3.
+  let savedOdds = localStorage.getItem('savedOdds');
+  // Step 4.
+  odds = JSON.parse(savedOdds);
+}
+
+// Question: Where in the code do I want to load my odds views?
+// Load from LS
+if (localStorage.getItem('savedViews')) {
+  // Step 3.
+  let savedViews = localStorage.getItem('savedViews');
+  // Step 4.
+  odds = JSON.parse(savedViews);
+}
+// Questions: how do I track the clicks with local storage?
+// How do I get the site to reload without breaking and refresh while keeping up with the incrementing clicks for the proper results?
+
+
 let uniqueOdds = [];
 
 let firstOdd;
@@ -82,6 +103,13 @@ function renderOdds() {
   secondOdd.views++;
   thirdOdd.views++;
 
+  // Question: Where in the code do I want to save my views?
+  // every time a odd is viewed, I want to save the odd views to LS
+  // Step 1.
+  let stringify = JSON.stringify(firstOdd.views++, secondOdd.views++, thirdOdd.views++);
+  // Step 2.
+  localStorage.setItem('savedViews', stringify);
+
   uniqueOdds.shift();
   uniqueOdds.shift();
   uniqueOdds.shift();
@@ -95,6 +123,14 @@ renderOdds();
 function handleOddClick(event) {
   clicks++;
   console.log(event.target);
+
+  // Question: Where in the code do I want to save my odds array?
+  // every time a odd is clicked, I want to save the odds array to LS
+  // Step 1.
+  let stringify = JSON.stringify(odds);
+  // Step 2.
+  localStorage.setItem('savedOdds', stringify);
+
 
 
   // increment the correct odd's .clicks?
@@ -165,7 +201,7 @@ function viewResults(event) {
       }, {
         label: '# of Views Per Odd Image',
         data: oddViews,
-        borderColor:[], // Utils.CHART_COLORS.blue,
+        borderColor: [], // Utils.CHART_COLORS.blue,
         borderWidth: 1 //Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
       }]
     },
