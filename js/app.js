@@ -42,22 +42,25 @@ let odds = [odd1, odd2, odd3, odd4, odd5, odd6, odd7, odd8, odd9, odd10, odd11, 
 // Question: Where in the code do I want to load my odds array?
 // Load from LS
 if (localStorage.getItem('savedOdds')) {
-  // Step 3.
+  //   // Step 3.
   let savedOdds = localStorage.getItem('savedOdds');
   // Step 4.
   odds = JSON.parse(savedOdds);
 }
 
-// Question: Where in the code do I want to load my odds views?
-// Load from LS
-if (localStorage.getItem('savedViews')) {
-  // Step 3.
-  let savedViews = localStorage.getItem('savedViews');
-  // Step 4.
-  odds = JSON.parse(savedViews);
+// // Question: Where in the code do I want to load my odds click count?
+// // Load from LS
+if (localStorage.getItem('countedClicks') <= 24) {
+  //   // Step 3.
+  let countedClicks = localStorage.getItem('countedClicks');
+  //   // Step 4.
+  clicks = JSON.parse(countedClicks);
+} else {
+  localStorage.removeItem('savedOdds');
 }
-// Questions: how do I track the clicks with local storage?
-// How do I get the site to reload without breaking and refresh while keeping up with the incrementing clicks for the proper results?
+
+
+
 
 
 let uniqueOdds = [];
@@ -103,13 +106,6 @@ function renderOdds() {
   secondOdd.views++;
   thirdOdd.views++;
 
-  // Question: Where in the code do I want to save my views?
-  // every time a odd is viewed, I want to save the odd views to LS
-  // Step 1.
-  let stringify = JSON.stringify(firstOdd.views++, secondOdd.views++, thirdOdd.views++);
-  // Step 2.
-  localStorage.setItem('savedViews', stringify);
-
   uniqueOdds.shift();
   uniqueOdds.shift();
   uniqueOdds.shift();
@@ -124,12 +120,13 @@ function handleOddClick(event) {
   clicks++;
   console.log(event.target);
 
-  // Question: Where in the code do I want to save my odds array?
-  // every time a odd is clicked, I want to save the odds array to LS
+  // Question: Where in the code do I want to save my odd click count?
+  // every time a odd is clicked, I want to save it to the limited counts to LS
   // Step 1.
-  let stringify = JSON.stringify(odds);
-  // Step 2.
-  localStorage.setItem('savedOdds', stringify);
+  let countClicksLsConverter = JSON.stringify(clicks);
+  console.log(countClicksLsConverter);
+  // // Step 2.
+  localStorage.setItem('countedClicks', countClicksLsConverter);
 
 
 
@@ -140,6 +137,14 @@ function handleOddClick(event) {
       odds[i].clicks++;
     }
   }
+
+  console.log(odds);
+
+  // Step 1.
+  let oddsArrayLsConversion = JSON.stringify(odds);
+  console.log(oddsArrayLsConversion);
+  // // Step 2.
+  localStorage.setItem('savedOdds', oddsArrayLsConversion);
 
   if (clicks > 24) {
     // remove the event listeners
