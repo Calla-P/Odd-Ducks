@@ -39,6 +39,30 @@ let odd19 = new Odd('wine-glass', './images/wine-glass.jpeg');
 
 let odds = [odd1, odd2, odd3, odd4, odd5, odd6, odd7, odd8, odd9, odd10, odd11, odd12, odd13, odd14, odd15, odd16, odd17, odd18, odd19];
 
+// Question: Where in the code do I want to load my odds array?
+// Load from LS
+if (localStorage.getItem('savedOdds')) {
+  //   // Step 3.
+  let savedOdds = localStorage.getItem('savedOdds');
+  // Step 4.
+  odds = JSON.parse(savedOdds);
+}
+
+// // Question: Where in the code do I want to load my odds click count?
+// // Load from LS
+if (localStorage.getItem('countedClicks') <= 24) {
+  //   // Step 3.
+  let countedClicks = localStorage.getItem('countedClicks');
+  //   // Step 4.
+  clicks = JSON.parse(countedClicks);
+} else {
+  localStorage.removeItem('savedOdds');
+}
+
+
+
+
+
 let uniqueOdds = [];
 
 let firstOdd;
@@ -96,6 +120,15 @@ function handleOddClick(event) {
   clicks++;
   console.log(event.target);
 
+  // Question: Where in the code do I want to save my odd click count?
+  // every time a odd is clicked, I want to save it to the limited counts to LS
+  // Step 1.
+  let countClicksLsConverter = JSON.stringify(clicks);
+  console.log(countClicksLsConverter);
+  // // Step 2.
+  localStorage.setItem('countedClicks', countClicksLsConverter);
+
+
 
   // increment the correct odd's .clicks?
 
@@ -104,6 +137,14 @@ function handleOddClick(event) {
       odds[i].clicks++;
     }
   }
+
+  console.log(odds);
+
+  // Step 1.
+  let oddsArrayLsConversion = JSON.stringify(odds);
+  console.log(oddsArrayLsConversion);
+  // // Step 2.
+  localStorage.setItem('savedOdds', oddsArrayLsConversion);
 
   if (clicks > 24) {
     // remove the event listeners
@@ -165,7 +206,7 @@ function viewResults(event) {
       }, {
         label: '# of Views Per Odd Image',
         data: oddViews,
-        borderColor:[], // Utils.CHART_COLORS.blue,
+        borderColor: [], // Utils.CHART_COLORS.blue,
         borderWidth: 1 //Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
       }]
     },
