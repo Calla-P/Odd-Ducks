@@ -4,7 +4,7 @@
 
   body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #E4D7D0;
+    background-image: linear-gradient(#E4D7D0,#FF9636);
     color: #0A4158;
     width: 80%;
     height:90%;
